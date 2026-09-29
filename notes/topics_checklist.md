@@ -1,6 +1,12 @@
 # Topics Checklist: Professional Data Engineer in Python
 
 Check items off as I can explain them **without notes**, or demonstrate them from scratch.
+DataCamp completion does not count. Section numbers follow the folder numbers; see the
+README "Track items" table for the current platform order.
+
+**Status 2026-09-29:** DataCamp shows Course 1 and Testing (section 8) complete, and the
+Data Engineer Associate cert was earned. Nothing below is checked yet because nothing has
+been demonstrated from a blank file.
 
 ---
 

@@ -2,11 +2,14 @@
 
 **Provider:** DataCamp (Career Track)
 **Level:** Advanced
-**Format:** 13 courses, 2 projects, 3 bonus courses, ~40 hours
+**Format:** 13 courses, 5 chapters, 2 projects, 3 bonus items, ~40 hours
 **Prerequisite:** Data Engineer in Python (completed)
-**Participants:** 17,277
+**Participants:** 17,727
 **Repo:** https://github.com/rodolfolermacontreras/datacamp-data-engineering-cert
-**Started:** September 2026 | **Current completion:** 9%
+**Started:** September 2026 | **Current completion:** 15% (as of 2026-09-29)
+
+**Certification earned:** DataCamp **Data Engineer Associate**, 2026-09-29
+(credential `DEA0016275089433`). See [Certifications](#certifications).
 
 **Instructors:** Mike Metzger (Data Engineer Consultant, Flexible Creations),
 Cem Sakarya (Instructor and DevOps Risk Advisor), Miller Trujillo (Staff Software
@@ -42,42 +45,48 @@ being a data scientist who can ship.
 
 ## Track structure
 
-### Core courses
+DataCamp restructured the track. The list below matches the platform as of 2026-09-29.
+Folder names were kept from the original layout, so the Folder column maps each item to
+where its notes and code live.
 
-| # | Course | Chapters | Folder |
+### Track items (platform order)
+
+| # | Type | Item | Folder |
 |---|---|---|---|
-| 1 | Understanding Modern Data Architecture | 4 | `01-understanding-modern-data-architecture/` |
-| 2 | Introduction to Shell | 5 | `02-introduction-to-shell/` |
-| 3 | Containerization and Virtualization Concepts | 2 | `03-containerization-virtualization-concepts/` |
-| 4 | Introduction to dbt | 3 | `04-introduction-to-dbt/` |
-| 5 | Object-Oriented Programming in Python | 3 | `05-object-oriented-programming-python/` |
-| 6 | NoSQL Concepts | 4 | `06-nosql-concepts/` |
-| 7 | Introduction to DevOps | 4 | `07-introduction-to-devops/` |
-| 8 | Unit Testing in Python | 4 | `08-unit-testing-python/` |
-| 9 | Introduction to PySpark | 3 | `09-introduction-to-pyspark/` |
-| 10 | Big Data Fundamentals with PySpark | 3 | `10-big-data-fundamentals-pyspark/` |
-| 11 | Streaming Concepts | 4 | `11-streaming-concepts/` |
-| 12 | Apache Kafka | 2 | `12-apache-kafka/` |
-| 13 | Introduction to Kubernetes | 3 | `13-introduction-to-kubernetes/` |
-
-### Projects
-`projects/`
-
-| Project | Focus |
-|---|---|
-| Debugging Sales Data | Sharpen debugging skills to improve sales data accuracy |
-| Cleaning E-commerce Data with PySpark | Distributed data cleaning at scale |
+| 1 | Course | Understanding Modern Data Architecture | `01-understanding-modern-data-architecture/` |
+| 2 | Course | Introduction to Shell | `02-introduction-to-shell/` |
+| 3 | Course | Containerization and Virtualization Concepts | `03-containerization-virtualization-concepts/` |
+| 4 | Course | Introduction to dbt | `04-introduction-to-dbt/` |
+| 5 | Course | Introduction to Object-Oriented Programming in Python | `05-object-oriented-programming-python/` |
+| 6 | Course | Introduction to NoSQL | `06-nosql-concepts/` |
+| 7 | Course | DevOps Concepts | `07-introduction-to-devops/` |
+| 8 | Course | Introduction to Testing in Python | `08-unit-testing-python/` |
+| 9 | Course | Introduction to Docker (moved from bonus to core) | `bonus-introduction-to-docker/` |
+| 10 | Course | Introduction to PySpark | `09-introduction-to-pyspark/` |
+| 11 | Chapter | Introduction to Big Data analysis with Spark | `10-big-data-fundamentals-pyspark/` |
+| 12 | Chapter | Programming in PySpark RDDs | `10-big-data-fundamentals-pyspark/` |
+| 13 | Chapter | PySpark SQL and DataFrames | `10-big-data-fundamentals-pyspark/` |
+| 14 | Chapter | Downloading Data on the Command Line | `bonus-data-processing-in-shell/` |
+| 15 | Chapter | Data Pipeline on the Command Line | `bonus-data-processing-in-shell/` |
+| 16 | Course | Streaming Concepts | `11-streaming-concepts/` |
+| 17 | Course | Introduction to Apache Kafka | `12-apache-kafka/` |
+| 18 | Course | Introduction to Kubernetes | `13-introduction-to-kubernetes/` |
 
 ### Bonus material (0 of 3 complete)
-| Course | Folder |
-|---|---|
-| Introduction to Docker | `bonus-introduction-to-docker/` |
-| Data Processing in Shell | `bonus-data-processing-in-shell/` |
-| (third bonus, confirm on platform) | |
+`projects/` holds the two projects.
+
+| Type | Item | Focus |
+|---|---|---|
+| Project | Debugging Code | Debug a sales data pipeline to fix accuracy issues |
+| Project | Cleaning an Orders Dataset with PySpark | Distributed data cleaning at scale |
+| Webinar | Impactful Data Engineering, with Datadog's Wouter de Bie | Industry context |
 
 ---
 
 ## Course detail
+
+Numbering in this section follows the folder numbers, not the current platform order.
+See [Track items](#track-items-platform-order) for the mapping.
 
 ### 1. Understanding Modern Data Architecture
 Key components of modern data architecture, from ingestion and serving to governance and
@@ -159,37 +168,74 @@ Each course folder should end up with:
 
 ## Progress
 
-| # | Course | Status | Completion |
-|---|---|---|---|
-| 1 | Understanding Modern Data Architecture | In progress | 21% |
-| 2 | Introduction to Shell | Not started | |
-| 3 | Containerization and Virtualization Concepts | Not started | |
-| 4 | Introduction to dbt | Not started | |
-| 5 | Object-Oriented Programming in Python | Not started | |
-| 6 | NoSQL Concepts | Not started | |
-| 7 | Introduction to DevOps | Not started | |
-| 8 | Unit Testing in Python | Not started | |
-| 9 | Introduction to PySpark | Not started | |
-| 10 | Big Data Fundamentals with PySpark | Not started | |
-| 11 | Streaming Concepts | Not started | |
-| 12 | Apache Kafka | Not started | |
-| 13 | Introduction to Kubernetes | Not started | |
-| P1 | Project: Debugging Sales Data | Not started | |
-| P2 | Project: Cleaning E-commerce Data with PySpark | Not started | |
+Two columns on purpose. **DataCamp** is what the platform says. **Demonstrated** is the
+real bar: done from a blank file and explained without hedging.
 
-**Track completion: 9%**
+| # | Item | DataCamp | Demonstrated |
+|---|---|---|---|
+| 1 | Understanding Modern Data Architecture | Complete | No (no `notes.md` yet) |
+| 2 | Introduction to Shell | 0% | No |
+| 3 | Containerization and Virtualization Concepts | 0% | No |
+| 4 | Introduction to dbt | 0% | No |
+| 5 | Introduction to OOP in Python | 3% | No |
+| 6 | Introduction to NoSQL | 0% | No |
+| 7 | DevOps Concepts | 0% | No |
+| 8 | Introduction to Testing in Python | Complete | **No (priority gap)** |
+| 9 | Introduction to Docker | 0% | No |
+| 10 | Introduction to PySpark | 81% | No |
+| 11-13 | PySpark chapters (Big Data, RDDs, SQL and DataFrames) | 0% | No |
+| 14-15 | Command line chapters (downloading data, pipelines) | 0% | No |
+| 16 | Streaming Concepts | 0% | No |
+| 17 | Introduction to Apache Kafka | 0% | No |
+| 18 | Introduction to Kubernetes | 3% | No |
+| B1 | Project: Debugging Code | Not started | No |
+| B2 | Project: Cleaning an Orders Dataset with PySpark | Not started | No |
+| B3 | Webinar: Impactful Data Engineering (Datadog) | Not started | n/a |
+
+**Track completion (DataCamp): 15%**
+
+---
+
+## Certifications
+
+| Certification | Date | Credential | Notes |
+|---|---|---|---|
+| DataCamp Data Engineer Associate | 2026-09-29 | `DEA0016275089433` | Timed exam + practical exam |
+
+Timed exam scores: Data Management Theory 199, Data Management in PostgreSQL 182
+(weakest), Exploratory Analysis Theory 200. Average 193, required 110.
+
+- Recap of every question: [notes/exam_recap_data_management.md](notes/exam_recap_data_management.md)
+- One-page study sheet: [notes/exam_cheatsheet_data_management.html](notes/exam_cheatsheet_data_management.html)
+- Verify: https://www.datacamp.com/certificate/DEA0016275089433
+
+**Honest caveat:** the timed exam answers were worked through with help. The cert is
+real, but the PostgreSQL items flagged in the recap still need to be re-drilled from memory.
+
+---
+
+## Next steps
+
+1. **Testing (item 8): prove it.** DataCamp shows it complete, but it has not been
+   demonstrated. Next session starts with a cold quiz and a blank-file pytest problem on my
+   own code. Write `08-unit-testing-python/notes.md` and the "how would you test this?"
+   answer in `notes/interview_answers.md`.
+2. **OOP (item 5)**, then **DevOps Concepts (item 7)**.
+3. **Finish Introduction to PySpark (item 10)**: 81%, close it out.
+4. Backfill `notes.md` for Course 1 in my own words.
+5. Re-drill the PostgreSQL weak spots from the exam recap.
 
 ---
 
 ## Priority order (if time is short)
 
-Courses 8 (Unit Testing), 5 (OOP), and 7 (DevOps) have the highest immediate return.
+Items 8 (Testing), 5 (OOP), and 7 (DevOps) have the highest immediate return.
 They map directly to the "production-ready Python" gap documented in
 `Coding_Practice/production_ready_python.md` and to questions I have already been asked
 and answered poorly.
 
-Courses 9, 10, 12, 13 build the distributed and infrastructure vocabulary. Those matter
-for credibility in system design conversations.
+Items 9 to 18 (Docker, PySpark, streaming, Kafka, Kubernetes) build the distributed and
+infrastructure vocabulary. Those matter for credibility in system design conversations.
 
 ---
 
