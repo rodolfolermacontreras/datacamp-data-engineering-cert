@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheat Sheet: Data Management and Exploratory Analysis</title>
+<style>
+  :root {
+    --bg: #f7f8fa; --card: #ffffff; --ink: #1d2433; --muted: #5b6475;
+    --accent: #0b6bcb; --warn: #c2410c; --ok: #15803d; --line: #e3e7ee; --code: #eef2f7;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 13px/1.45 "Segoe UI", system-ui, sans-serif; color: var(--ink); background: var(--bg); }
+  header { padding: 14px 22px; background: var(--ink); color: #fff; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; }
+  header h1 { margin: 0; font-size: 18px; }
+  header .score { font-size: 12px; opacity: .85; }
+  main { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 12px; padding: 14px; }
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+  section.wide { grid-column: 1 / -1; }
+  h2 { margin: 0 0 6px; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--accent); border-bottom: 2px solid var(--line); padding-bottom: 4px; }
+  h2.warn { color: var(--warn); }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th, td { text-align: left; padding: 3px 5px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; }
+  code { background: var(--code); padding: 1px 4px; border-radius: 3px; font: 12px Consolas, monospace; }
+  pre { background: var(--code); padding: 6px 8px; border-radius: 4px; margin: 4px 0; font: 12px Consolas, monospace; white-space: pre-wrap; }
+  ul { margin: 4px 0; padding-left: 18px; }
+  li { margin: 2px 0; }
+  .trap { color: var(--warn); font-weight: 600; }
+  .tag { display: inline-block; font-size: 10px; padding: 0 5px; border-radius: 3px; background: #fde7d9; color: var(--warn); font-weight: 700; margin-left: 4px; }
+  @media print {
+    body { background: #fff; font-size: 10px; }
+    main { grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 6px; }
+    section { break-inside: avoid; padding: 6px 8px; }
+    header { background: #fff; color: #000; border-bottom: 2px solid #000; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Cheat Sheet: Data Management + Exploratory Analysis</h1>
+  <span class="score">Passed 2026-09-29 | Theory 199 | PostgreSQL 182 (weakest) | EDA 200</span>
+</header>
+<main>
+
+<section>
+  <h2>Cloud services by role</h2>
+  <table>
+    <tr><th>Role</th><th>GCP</th><th>AWS</th><th>Azure</th></tr>
+    <tr><td>Real-time ingest</td><td>Pub/Sub</td><td>Kinesis</td><td>Event Hubs</td></tr>
+    <tr><td>Processing</td><td>Dataflow</td><td>EMR / Glue</td><td>Databricks / Stream Analytics</td></tr>
+    <tr><td>Orchestration</td><td>Composer (Airflow)</td><td>MWAA / Step Functions</td><td>Data Factory</td></tr>
+    <tr><td>Warehouse</td><td>BigQuery</td><td>Redshift</td><td>Synapse / Fabric</td></tr>
+    <tr><td>Object store (lake)</td><td>Cloud Storage</td><td>S3</td><td>ADLS / Blob</td></tr>
+    <tr><td>Relational DB</td><td>Cloud SQL</td><td>RDS</td><td>Azure SQL</td></tr>
+  </table>
+  <ul>
+    <li><b>Keywords:</b> "real-time / events" = ingest. "schedule / DAG / monitor" = orchestration. "structured + analysis" = warehouse. "raw files" = object store.</li>
+    <li>AWS Data Pipeline and Glue are <b>batch</b>, not real-time.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Data modeling and keys</h2>
+  <table>
+    <tr><th>Stage</th><th>Focus</th></tr>
+    <tr><td>Conceptual</td><td>What the business needs</td></tr>
+    <tr><td>Logical</td><td>Entities, relationships, normalization (engine-agnostic)</td></tr>
+    <tr><td>Physical</td><td><b>Performance</b>: types, indexes, partitions, denormalize</td></tr>
+  </table>
+  <table style="margin-top:6px">
+    <tr><th>Key</th><th>Definition</th></tr>
+    <tr><td>Super key</td><td><b>Any set of one or more</b> columns that is unique</td></tr>
+    <tr><td>Candidate</td><td>Minimal super key</td></tr>
+    <tr><td>Primary</td><td>Chosen candidate key</td></tr>
+    <tr><td>Composite</td><td>Key with <b>2+</b> columns</td></tr>
+    <tr><td>Foreign</td><td>Points to another table's PK</td></tr>
+  </table>
+  <ul>
+    <li><b>Partitioning</b> = split in one DB. <b>Sharding</b> = split across servers. <b>Replication</b> = copies across servers.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>psql and type inspection</h2>
+  <pre>\d cars                      -- describe table (psql only)
+SELECT pg_typeof(col) FROM t LIMIT 1;
+SELECT column_name, data_type
+FROM information_schema.columns
+WHERE table_name = 'cars';</pre>
+  <ul>
+    <li><code>"Data Type"</code> double quotes = identifier. <code>'text'</code> single quotes = value.</li>
+    <li><code>SHOW</code> only reads config settings.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>ALTER TABLE and casting</h2>
+  <pre>ALTER TABLE t ALTER COLUMN c TYPE INTEGER USING ROUND(c);
+ALTER TABLE t ALTER COLUMN c SET NOT NULL;   -- DROP NOT NULL
+ALTER TABLE t ALTER COLUMN c SET DEFAULT 0;  -- DROP DEFAULT
+
+CAST(x AS NUMERIC)   -- standard SQL
+x::NUMERIC           -- PostgreSQL shorthand
+CAST(txt AS NUMERIC)::INTEGER  -- '878.6' -> 879</pre>
+  <ul>
+    <li><span class="trap">Trap:</span> <code>'878.6'::INTEGER</code> errors. Go through NUMERIC.</li>
+    <li><code>NUMERIC</code> = exact, arbitrary precision. <code>REAL/FLOAT</code> = binary rounding.</li>
+    <li><code>SET NOT NULL</code> fails if NULLs already exist.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Pattern matching <span class="tag">RE-DRILL</span></h2>
+  <table>
+    <tr><th>Operator</th><th>Supports</th></tr>
+    <tr><td><code>LIKE</code></td><td>only <code>%</code> and <code>_</code></td></tr>
+    <tr><td><code>SIMILAR TO</code></td><td><code>[ ] + * |</code>, must match <b>whole</b> string, no real <code>^</code></td></tr>
+    <tr><td><code>~</code> / <code>!~</code></td><td>POSIX regex, match / not match</td></tr>
+    <tr><td><code>~*</code> / <code>!~*</code></td><td>case-insensitive</td></tr>
+  </table>
+  <pre>'[0-9]$'          ends with digit
+'^[1-3].*[5-9]$'  starts 1-3, ends 5-9
+'^[Pp]'           starts with P or p
+!~ '^CDX[0-9]+$'  exclude CDX codes</pre>
+  <ul><li><code>^</code> start, <code>$</code> end, <code>.</code> any char, <code>*</code> 0+, <code>+</code> 1+.</li></ul>
+</section>
+
+<section>
+  <h2>Dates and time zones <span class="tag">RE-DRILL</span></h2>
+  <table>
+    <tr><th>EXTRACT field</th><th>Range</th></tr>
+    <tr><td><code>DOW</code></td><td>0-6, <b>Sunday = 0</b></td></tr>
+    <tr><td><code>ISODOW</code></td><td>1-7, Monday = 1</td></tr>
+    <tr><td><code>DAY</code></td><td>day of month 1-31</td></tr>
+    <tr><td><code>DOY</code></td><td>day of year 1-366</td></tr>
+  </table>
+  <pre>ts_tz AT TIME ZONE 'America/Los_Angeles'</pre>
+  <ul>
+    <li><code>timestamptz</code> AT TIME ZONE -> local <code>timestamp</code>.</li>
+    <li><code>timestamp</code> AT TIME ZONE -> <code>timestamptz</code>. <span class="trap">Flips!</span></li>
+    <li>Use named zones (DST safe), not <code>'-08'</code>.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Joins, subqueries, set ops</h2>
+  <pre>ON a.user_id = b.user_id   -- any names, keeps both cols
+USING (user_id)            -- same name, one col in output
+WHERE EXISTS (SELECT 1 FROM s WHERE s.id = b.id)
+WHERE id IN (SELECT id FROM f GROUP BY id
+             HAVING AVG(minutes) > 200)
+WHERE d >= (SELECT MAX(end_date) FROM t
+            WHERE project_id = ep.project_id)</pre>
+  <ul>
+    <li><b>WHERE</b> = rows before grouping. <b>HAVING</b> = groups after (aggregates OK).</li>
+    <li><b>INNER</b> drops non-matches. <b>LEFT</b> keeps all left rows (NULLs).</li>
+    <li><b>EXISTS</b> returns each row once. A JOIN duplicates per match.</li>
+    <li><b>UNION ALL</b> keeps duplicates (use before SUM). <b>UNION</b> dedupes, slower.</li>
+    <li>Every subquery in FROM needs an alias: <code>) x</code>.</li>
+    <li><code>MAX()</code> recovers a value repeated per row after a fan-out join.</li>
+    <li><code>* 1.00</code> forces decimal division.</li>
+  </ul>
+</section>
+
+<section>
+  <h2 class="warn">NULL traps</h2>
+  <ul>
+    <li><code>NULL NOT IN (...)</code> is NULL, not TRUE. Rows are skipped.</li>
+    <li>Fix: <code>OR col IS NULL</code>, or use <code>NOT EXISTS</code>.</li>
+    <li><code>col = NULL</code> never true. Use <code>IS NULL</code>.</li>
+    <li>Aggregates ignore NULL. <code>COUNT(*)</code> counts rows, <code>COUNT(col)</code> skips NULL.</li>
+  </ul>
+  <pre>UPDATE t SET pref = 'Other'
+WHERE pref NOT IN ('Active','Beach')
+   OR pref IS NULL;</pre>
+</section>
+
+<section>
+  <h2>Chart picker</h2>
+  <table>
+    <tr><th>Question shape</th><th>Chart</th></tr>
+    <tr><td>Relationship, 2 numeric vars</td><td><b>Scatterplot</b> (+ regression line for "per $X")</td></tr>
+    <tr><td>Distribution, 1 numeric var</td><td><b>Histogram</b></td></tr>
+    <tr><td>Distribution per category</td><td><b>Box plot</b></td></tr>
+    <tr><td>Change over time</td><td><b>Line chart</b> (one line per category)</td></tr>
+    <tr><td>Compare categories</td><td><b>Bar chart</b></td></tr>
+    <tr><td>Aggregate across 2 categoricals</td><td><b>Pivot table</b></td></tr>
+    <tr><td>Value across 2 features, colored grid</td><td><b>Heat map</b></td></tr>
+    <tr><td>Hierarchy / nested</td><td>Treemap / sunburst</td></tr>
+    <tr><td>Normality check</td><td>Histogram / Q-Q plot</td></tr>
+  </table>
+  <ul>
+    <li>Pivot table value = <b>view summaries in different ways</b> (interactive slicing).</li>
+    <li>Heat map = pivot table + color.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Stats you must say cleanly</h2>
+  <ul>
+    <li><b>Box plot:</b> box = Q1 to Q3. Line = median. Whiskers = within 1.5 x IQR. Dots = outliers.</li>
+    <li><b>IQR</b> = Q3 - Q1 = <b>box width</b>. Robust to outliers.</li>
+    <li><b>Outlier rule:</b> &lt; Q1 - 1.5 IQR or &gt; Q3 + 1.5 IQR.</li>
+    <li><b>Seaborn band</b> = 95% <b>confidence interval</b> of the mean line. Wider at the edges (less data).</li>
+    <li><b>CI</b> = where the line is. <b>PI</b> = where a new point lands (wider).</li>
+    <li><b>Skew:</b> scores piled low (right tail) = hard exam. Piled high = easy.</li>
+    <li><b>Histogram vs bar:</b> continuous bins, bars touch vs discrete categories with gaps.</li>
+    <li><b>Correlation is not causation.</b> Causal claims need an experiment or causal model.</li>
+  </ul>
+</section>
+
+<section class="wide">
+  <h2 class="warn">Where points were likely lost: re-drill from a blank file</h2>
+  <table>
+    <tr><th>Area</th><th>Drill</th></tr>
+    <tr><td>Regex vs LIKE vs SIMILAR TO</td><td>Write the same filter 3 ways and predict which rows each returns before running</td></tr>
+    <tr><td>DOW vs ISODOW</td><td>Run both on <code>'2026-09-27'</code> (a Sunday) and explain the difference</td></tr>
+    <tr><td>Join keys</td><td>Always read the schema first. <code>USING (x)</code> in a later question reveals the shared column name</td></tr>
+    <tr><td>AT TIME ZONE</td><td>Apply to a <code>timestamp</code> and a <code>timestamptz</code>; explain why the output types differ</td></tr>
+    <tr><td>NOT IN with NULL</td><td>Build a 3-row table with a NULL, prove the trap, fix with <code>NOT EXISTS</code></td></tr>
+  </table>
+</section>
+
+</main>
+</body>
+</html>
